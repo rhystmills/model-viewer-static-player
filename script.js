@@ -14,21 +14,10 @@ controls = {
 }
 
 
-
-// setTimeout(()=>{
-// console.log(modelViewer.availableAnimations)
-// console.log(modelViewer.currentTime)
-// console.log(modelViewer.paused)
-// console.log(modelViewer.attributes)
-// }, 4000)
-
-
 sliderSwitch.addEventListener("mousedown", (e) => {
-    controls.override = false;
     sliderSwitch.props.active = true;
 })
 slider.addEventListener("mousedown", (e) => {
-    controls.override = false;
     sliderSwitch.props.active = true;
 })
 pauseButton.addEventListener("mousedown", (e) => {
@@ -38,19 +27,17 @@ pauseButton.addEventListener("mousedown", (e) => {
     }
 })
 playButton.addEventListener("mousedown", (e) => {
-    console.log("hmm")
+    controls.override = false;
     sliderSwitch.props.active = false
     if (modelViewer.play){ 
-        // console.log(modelViewer.currentTime)
-        // controls.override = false;
-        // sliderSwitch.props.active = true;
         modelViewer.play()
     }
 })
 
 window.addEventListener("mouseup", (e) => {
+    sliderSwitch.props.active = false
+
     if (!controls.override){
-        sliderSwitch.props.active = false
         if (modelViewer.play) {
             modelViewer.play();
         }
