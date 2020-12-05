@@ -13,20 +13,19 @@ controls = {
     override: false
 }
 
+sliderSwitch.addEventListener("mousedown", (e) => { sliderSwitch.props.active = true; })
+slider.addEventListener("mousedown", (e) => { sliderSwitch.props.active = true; })
+sliderSwitch.addEventListener("touchstart", (e) => { sliderSwitch.props.active = true; })
+slider.addEventListener("touchstart", (e) => { sliderSwitch.props.active = true; })
 
-sliderSwitch.addEventListener("mousedown", (e) => {
-    sliderSwitch.props.active = true;
-})
-slider.addEventListener("mousedown", (e) => {
-    sliderSwitch.props.active = true;
-})
-pauseButton.addEventListener("mousedown", (e) => {
+pauseButton.addEventListener("click", (e) => {
     if (modelViewer.pause) {
         controls.override = true;
         modelViewer.pause()
     }
 })
-playButton.addEventListener("mousedown", (e) => {
+
+playButton.addEventListener("click", (e) => {
     controls.override = false;
     sliderSwitch.props.active = false
     if (modelViewer.play){ 
@@ -34,7 +33,10 @@ playButton.addEventListener("mousedown", (e) => {
     }
 })
 
-window.addEventListener("mouseup", (e) => {
+window.addEventListener("mouseup", (e) => {endInteractionHandler(e)})
+window.addEventListener("touchend", (e) => {endInteractionHandler(e)})
+
+function endInteractionHandler(e){
     sliderSwitch.props.active = false
 
     if (!controls.override){
@@ -42,16 +44,22 @@ window.addEventListener("mouseup", (e) => {
             modelViewer.play();
         }
     }
-})
+}
+
+function moveHandler(e){
+    mousePosition.x = e.pageX;
+    mousePosition.y = e.pageY;
+}
 
 const mousePosition = {
     x: 0,
     y: 0
 }
-window.addEventListener("mousemove", (e) => {
-    mousePosition.x = e.pageX;
-    mousePosition.y = e.pageY;
-})
+
+window.addEventListener("mousemove", (e) => { moveHandler(e) })
+window.addEventListener("touchmove", (e) => { moveHandler(e) })
+
+
 
 const duration = 5;
 
